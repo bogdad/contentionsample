@@ -2,4 +2,4 @@
 
 This just does some heavily contended things
 
-![flamegraph](https://raw.githubusercontent.com/bogdad/contentionsample/master/flamegraph.svg)
+![flamegraph](https://https://cdn.rawgit.com/bogdad/contentionsample/master/flamegraph.svg)
