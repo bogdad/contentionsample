@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 mainClassName = "Contention"
+applicationDefaultJvmArgs = ["XX:+PreserveFramePointer", "-XX:InlineSmallCode=500"]
 sourceCompatibility = 1.8
 
 repositories {
