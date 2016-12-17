@@ -39,7 +39,7 @@ public class Contention {
                 } else {
                     syncMax(syncMax, i);
                 }
-                if (i % 1000 == 0) {
+                if (i % 100000 == 0) {
                     System.out.println("syncMax " + syncMax.max);
                     System.out.println("atomicMax " + atomicMax.get());
                 }
