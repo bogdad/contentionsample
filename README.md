@@ -119,3 +119,83 @@ WARNING: Number of errors: 0, skipped probes: 52
 ## Flamegraph
 
 ![flamegraph](https://cdn.rawgit.com/bogdad/contentionsample/master/flamegraphless.svg)
+
+
+## Pidstat with jstack
+
+```bash
+vshakhov@ubuntu:~$ pidstat -w -I -t -p 4357  5
+Linux 4.8.0-22-generic (ubuntu) 	12/18/2016 	_x86_64_	(2 CPU)
+
+03:11:34 PM   UID      TGID       TID   cswch/s nvcswch/s  Command
+03:11:39 PM  1000      4357         -      0.00      0.00  java
+03:11:39 PM  1000         -      4357      0.00      0.00  |__java
+03:11:39 PM  1000         -      4359      0.00      0.00  |__java
+03:11:39 PM  1000         -      4363     29.20      4.80  |__java
+03:11:39 PM  1000         -      4364     29.00      4.80  |__java
+03:11:39 PM  1000         -      4365     49.20      0.80  |__java
+03:11:39 PM  1000         -      4366      0.00      0.00  |__java
+03:11:39 PM  1000         -      4367      0.00      0.00  |__java
+03:11:39 PM  1000         -      4368      0.00      0.00  |__java
+03:11:39 PM  1000         -      4369      0.20      0.00  |__java
+03:11:39 PM  1000         -      4370      0.20      0.00  |__java
+03:11:39 PM  1000         -      4371      0.00      0.00  |__java
+03:11:39 PM  1000         -      4372     20.00      0.00  |__java
+03:11:39 PM  1000         -      4373    465.00    330.80  |__java
+"pusher 0" #8 prio=5 os_prio=0 tid=0x00007fe28810f800 nid=0x1115 runnable [0x00007fe2761f0000]
+   java.lang.Thread.State: RUNNABLE
+	at java.lang.Integer.valueOf(Integer.java:832)
+	at ContentionLess.lambda$null$0(ContentionLess.java:34)
+	at ContentionLess$$Lambda$6/558638686.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:745)
+03:11:39 PM  1000         -      4374    475.00    363.60  |__java
+"pusher 1" #9 prio=5 os_prio=0 tid=0x00007fe288113000 nid=0x1116 waiting on condition [0x00007fe2760ef000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000b3a09fd0> (a java.util.concurrent.locks.ReentrantLock$NonfairSync)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt(AbstractQueuedSynchronizer.java:836)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireQueued(AbstractQueuedSynchronizer.java:870)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquire(AbstractQueuedSynchronizer.java:1199)
+	at java.util.concurrent.locks.ReentrantLock$NonfairSync.lock(ReentrantLock.java:209)
+	at java.util.concurrent.locks.ReentrantLock.lock(ReentrantLock.java:285)
+	at ContentionLess.syncMax(ContentionLess.java:67)
+	at ContentionLess.lambda$null$0(ContentionLess.java:36)
+	at ContentionLess$$Lambda$6/558638686.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:745)
+03:11:39 PM  1000         -      4392      0.00      0.00  |__java
+03:11:39 PM  1000         -      4393      0.00      0.00  |__java
+03:11:39 PM  1000         -      4397      0.00      0.00  |__java
+```
+
+## SystemTap futexes.stp
+```bash
+vshakhov@ubuntu:~$ sudo stap ./futexes.stp
+[sudo] password for vshakhov:
+^Cjava[4334] lock 0x7fc4b8d2eaf4 contended 192 times, 5534 avg us
+java[4334] lock 0x7fc4b8d2eac8 contended 1 times, 33 avg us
+java[4357] lock 0x7fe288112654 contended 261 times, 1422 avg us
+java[4357] lock 0x7fe288074854 contended 449 times, 189 avg us
+java[4357] lock 0x7fe288112b04 contended 12089 times, 37 avg us
+java[4357] lock 0x7fe288020350 contended 5 times, 31 avg us
+java[4357] lock 0x7fe288020328 contended 90 times, 5 avg us
+java[4357] lock 0x7fe288112228 contended 5 times, 4 avg us
+java[4357] lock 0x7fe288114630 contended 3258 times, 31 avg us
+java[4357] lock 0x7fe288112ad8 contended 5996 times, 9 avg us
+java[4357] lock 0x7fe288113e28 contended 3 times, 10 avg us
+java[4357] lock 0x7fe288020354 contended 582 times, 29835 avg us
+java[4357] lock 0x7fe288114608 contended 4208 times, 13 avg us
+java[4357] lock 0x7fe288021f28 contended 11 times, 18 avg us
+java[4357] lock 0x7fe288112254 contended 38 times, 374 avg us
+java[4357] lock 0x7fe288112b00 contended 4495 times, 31 avg us
+java[4357] lock 0x7fe288114254 contended 263 times, 1513 avg us
+java[4357] lock 0x7fe288113e54 contended 20 times, 419 avg us
+java[4357] lock 0x7fe288114228 contended 8 times, 428 avg us
+java[4357] lock 0x7fe288114634 contended 9446 times, 37 avg us
+java[4357] lock 0x7fe288074828 contended 232 times, 4 avg us
+java[4357] lock 0x7fe288112650 contended 30 times, 26 avg us
+java[4357] lock 0x7fe288112628 contended 3 times, 11 avg us
+java[4357] lock 0x7fe288114250 contended 35 times, 26 avg us
+java[4357] lock 0x7fe288021f54 contended 598 times, 29033 avg us
+java[4357] lock 0x7fe288021f50 contended 14 times, 25 avg us
+```
