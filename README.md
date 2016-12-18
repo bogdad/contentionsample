@@ -2,7 +2,12 @@
 
 This just does some heavily contended things
 
+## Flamegraph
+
 ![flamegraph](https://cdn.rawgit.com/bogdad/contentionsample/master/flamegraph.svg)
+
+## Pidstat with jstack
+
 ```bash
  vshakhov@ubuntu:~$ pidstat -w -I -t -p 2486 5
  Linux 4.8.0-22-generic (ubuntu) 	12/17/2016 	_x86_64_	(2 CPU)
@@ -64,3 +69,46 @@ This just does some heavily contended things
 
  09:48:37 PM  1000         -      2566      0.00      0.00  |__java
  ```
+
+## SystemTap futexes.stp
+
+vshakhov@ubuntu:~$ sudo stap futexes.stp
+^Cjava[3308] lock 0x7f481c0b5854 contended 1 times, 113 avg us
+java[3308] lock 0x7f481c0b8028 contended 1 times, 94 avg us
+java[3308] lock 0x7f481cdee114 contended 158 times, 34624 avg us
+java[3333] lock 0x7f63d812fc70 contended 4037 times, 47 avg us
+java[3333] lock 0x7f63d800b1e8 contended 22574 times, 18 avg us
+java[3333] lock 0x7f63d8021f50 contended 12 times, 45 avg us
+java[3333] lock 0x7f63d800b210 contended 13706 times, 47 avg us
+java[3333] lock 0x7f63d8140634 contended 92765 times, 111 avg us
+java[3333] lock 0x7f63d8140630 contended 2313 times, 33 avg us
+java[3333] lock 0x7f63d812fc74 contended 95261 times, 118 avg us
+java[3333] lock 0x7f63d8021f28 contended 57 times, 8 avg us
+java[3333] lock 0x7f63d813fb54 contended 287 times, 825 avg us
+java[3333] lock 0x7f63d8140608 contended 5401 times, 14 avg us
+java[3333] lock 0x7f63d8021f54 contended 713 times, 26504 avg us
+java[3333] lock 0x7f63d80b8328 contended 1 times, 4 avg us
+java[3333] lock 0x7f63d800ad54 contended 251 times, 905 avg us
+java[3333] lock 0x7f63d813fb28 contended 5 times, 9 avg us
+java[3333] lock 0x7f63d8074850 contended 9 times, 26 avg us
+java[3333] lock 0x7f63d8074828 contended 369 times, 17 avg us
+java[3333] lock 0x7f63d8020328 contended 14 times, 13 avg us
+java[3333] lock 0x7f63d812fc48 contended 8805 times, 14 avg us
+java[3333] lock 0x7f63d800ad28 contended 7 times, 17 avg us
+java[3333] lock 0x7f63d8074854 contended 603 times, 158 avg us
+java[3333] lock 0x7f63d800b214 contended 111924 times, 110 avg us
+java[3333] lock 0x7f63d8020350 contended 13 times, 24 avg us
+java[3333] lock 0x7f63d812f854 contended 275 times, 900 avg us
+java[3333] lock 0x7f63d812f850 contended 28 times, 29 avg us
+java[3333] lock 0x7f63d813fb50 contended 23 times, 28 avg us
+java[3333] lock 0x7f63d813f754 contended 3 times, 93 avg us
+java[3333] lock 0x7f63d800ad50 contended 1 times, 26 avg us
+java[3333] lock 0x7f63d812f828 contended 6 times, 18 avg us
+java[3333] lock 0x7f63d812f454 contended 1 times, 442 avg us
+java[3333] lock 0x7f63d813fd28 contended 1 times, 23 avg us
+java[3333] lock 0x7f63d800af54 contended 1 times, 26 avg us
+java[3333] lock 0x7f63d8020354 contended 762 times, 24803 avg us
+java[3333] lock 0x7f63d813fd54 contended 4 times, 58 avg us
+java[3333] lock 0x7f63d812fa54 contended 2 times, 85 avg us
+WARNING: Number of errors: 0, skipped probes: 52
+
