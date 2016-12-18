@@ -72,6 +72,7 @@ This just does some heavily contended things
 
 ## SystemTap futexes.stp
 
+```bash
 vshakhov@ubuntu:~$ sudo stap futexes.stp
 ^Cjava[3308] lock 0x7f481c0b5854 contended 1 times, 113 avg us
 java[3308] lock 0x7f481c0b8028 contended 1 times, 94 avg us
@@ -111,4 +112,4 @@ java[3333] lock 0x7f63d8020354 contended 762 times, 24803 avg us
 java[3333] lock 0x7f63d813fd54 contended 4 times, 58 avg us
 java[3333] lock 0x7f63d812fa54 contended 2 times, 85 avg us
 WARNING: Number of errors: 0, skipped probes: 52
-
+```
