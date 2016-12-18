@@ -113,3 +113,9 @@ java[3333] lock 0x7f63d813fd54 contended 4 times, 58 avg us
 java[3333] lock 0x7f63d812fa54 contended 2 times, 85 avg us
 WARNING: Number of errors: 0, skipped probes: 52
 ```
+
+# Second sample, less contention
+
+## Flamegraph
+
+![flamegraph](https://cdn.rawgit.com/bogdad/contentionsample/master/flamegraphless.svg)
