@@ -4,7 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = "Contention"
+mainClassName = "ContentionLess"
 applicationDefaultJvmArgs = ["-XX:+PreserveFramePointer", "-XX:InlineSmallCode=500"]
 sourceCompatibility = 1.8
 
