@@ -1,4 +1,4 @@
-# contentionsample
+# First sample, Contention
 
 This just does some heavily contended things
 
